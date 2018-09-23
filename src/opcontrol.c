@@ -33,6 +33,8 @@
  */
 void operatorControl() {
 	int THRESHOLD = 15;
+	bool intakeIsToggled = false;
+
 	while (1) {
 		int stickLX = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X)) > THRESHOLD? joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X) : 0;
  		int stickLY = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_Y)) > THRESHOLD? joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_Y) : 0;
@@ -44,9 +46,18 @@ void operatorControl() {
 		motorSet(MOTOR_BACK_LEFT, (stickLY + stickRX - stickLX) / 2);
 
 		if(joystickGetDigital(MAIN_JOYSTICK, 6, JOY_UP)) {
+			intakeIsToggled = true;
+		}
+		if(joystickGetDigital(MAIN_JOYSTICK, 6, JOY_DOWN)) {
+			intakeIsToggled = false;
+		}
+
+		if(intakeIsToggled) {
 			motorSet(MOTOR_INTAKE, -128);
+			motorSet(MOTOR_BELT, -128);
 		} else {
 			motorSet(MOTOR_INTAKE, 0);
+			motorSet(MOTOR_BELT, 0);
 		}
 
 		delay(20);

@@ -3,3 +3,4 @@
 #define MOTOR_BACK_LEFT 3
 #define MOTOR_BACK_RIGHT 4
 #define MOTOR_INTAKE 5
+#define MOTOR_BELT 6
