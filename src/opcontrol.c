@@ -78,11 +78,9 @@ void operatorControl() {
 		}
 
 		if(joystickGetDigital(MAIN_JOYSTICK, 8, JOY_RIGHT)) {
-			motorSet(MOTOR_FIRE_A, 90);
-			motorSet(MOTOR_FIRE_B, -90);
+			motorSet(MOTOR_FIRE, 90);
 		} else {
-			motorSet(MOTOR_FIRE_A, 0);
-			motorSet(MOTOR_FIRE_B, 0);
+			motorSet(MOTOR_FIRE, 0);
 		}
 
 		delay(20);
