@@ -35,6 +35,7 @@ void operatorControl() {
 
 	int THRESHOLD = 15;
 	bool intakeIsToggled = false;
+	bool firingMode = false;
 
 	while (1) {
 		int stickLX = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X)) > THRESHOLD? joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X) : 0;
@@ -54,11 +55,34 @@ void operatorControl() {
 		}
 
 		if(intakeIsToggled) {
-			motorSet(MOTOR_INTAKE, -128);
-			motorSet(MOTOR_BELT, -128);
+			motorSet(MOTOR_INTAKE, -127);
+			motorSet(MOTOR_BELT, -127);
 		} else {
 			motorSet(MOTOR_INTAKE, 0);
 			motorSet(MOTOR_BELT, 0);
+		}
+
+		if(joystickGetDigital(MAIN_JOYSTICK, 5, JOY_UP)) {
+			firingMode = true;
+		}
+		if(joystickGetDigital(MAIN_JOYSTICK, 5, JOY_DOWN)) {
+			firingMode = false;
+		}
+
+		if(firingMode) {
+			motorSet(MOTOR_FLYWHEEL_A, 127);
+			motorSet(MOTOR_FLYWHEEL_B, -127);
+		} else {
+			motorSet(MOTOR_FLYWHEEL_A, 0);
+			motorSet(MOTOR_FLYWHEEL_B, 0);
+		}
+
+		if(joystickGetDigital(MAIN_JOYSTICK, 8, JOY_RIGHT)) {
+			motorSet(MOTOR_FIRE_A, 90);
+			motorSet(MOTOR_FIRE_B, -90);
+		} else {
+			motorSet(MOTOR_FIRE_A, 0);
+			motorSet(MOTOR_FIRE_B, 0);
 		}
 
 		delay(20);

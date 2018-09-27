@@ -4,3 +4,7 @@
 #define MOTOR_BACK_RIGHT 4
 #define MOTOR_INTAKE 5
 #define MOTOR_BELT 6
+#define MOTOR_FIRE_A 7
+#define MOTOR_FIRE_B 8
+#define MOTOR_FLYWHEEL_A 9
+#define MOTOR_FLYWHEEL_B 10
