@@ -38,9 +38,12 @@ void operatorControl() {
 	bool firingMode = false;
 
 	while (1) {
-		int stickLX = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X)) > THRESHOLD? joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X) : 0;
- 		int stickLY = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_Y)) > THRESHOLD? joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_Y) : 0;
-		int stickRX = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_RIGHT_X)) > THRESHOLD? joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_RIGHT_X) : 0;
+		int stickLX = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X)) > THRESHOLD?
+			joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X) : 0;
+ 		int stickLY = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_Y)) > THRESHOLD?
+			joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_Y) : 0;
+		int stickRX = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_RIGHT_X)) > THRESHOLD?
+			joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_RIGHT_X) : 0;
 
 		motorSet(MOTOR_FRONT_RIGHT, -(stickLY - stickRX - stickLX) / 2);
 		motorSet(MOTOR_BACK_RIGHT, -(stickLY - stickRX + stickLX) / 2);
