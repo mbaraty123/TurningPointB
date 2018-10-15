@@ -59,7 +59,7 @@ void operatorControl() {
 
 		if(intakeIsToggled) {
 			motorSet(MOTOR_INTAKE, -127);
-			motorSet(MOTOR_BELT, -127);
+			motorSet(MOTOR_BELT, 127);
 		} else {
 			motorSet(MOTOR_INTAKE, 0);
 			motorSet(MOTOR_BELT, 0);
