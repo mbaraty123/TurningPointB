@@ -32,24 +32,54 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
-
+/*
+ *	Due to the joystics having a margin of error, the THRESHOLD variable allows for a pre-defined
+ *	sensitivity so that the motors do not over-exert themselves by applying a force too little to
+ *	move the motor.
+ */
 	int THRESHOLD = 15;
+
+	/*
+	*	Determines whether the intake system is activated.
+	*/
 	bool intakeIsToggled = false;
+
+	/*
+	* Determines whether the flywheel is activated.
+	*/
 	bool firingMode = false;
 
 	while (1) {
+
+		/*
+		* Sets the value of the left joystick's x-axis on the contoller to a variable.
+		*/
 		int stickLX = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X)) > THRESHOLD?
 			joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_X) : 0;
+
+			/*
+			* Sets the value of the left joystick's y-axis on the contoller to a variable.
+			*/
  		int stickLY = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_Y)) > THRESHOLD?
 			joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_LEFT_Y) : 0;
+
+			/*
+			* Sets the value of the right joystick's x-axis on the contoller to a variable.
+			*/
 		int stickRX = abs(joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_RIGHT_X)) > THRESHOLD?
 			joystickGetAnalog(MAIN_JOYSTICK, JOYSTICK_RIGHT_X) : 0;
 
+		/*
+		* Sets the motors to the correct power for mechanum wheels
+		*/
 		motorSet(MOTOR_FRONT_RIGHT, -(stickLY - stickRX - stickLX) / 2);
 		motorSet(MOTOR_BACK_RIGHT, -(stickLY - stickRX + stickLX) / 2);
 		motorSet(MOTOR_FRONT_LEFT, -(stickLY + stickRX + stickLX) / 2);
 		motorSet(MOTOR_BACK_LEFT, (stickLY + stickRX - stickLX) / 2);
 
+		/*
+		*	Toggles the intakeIsToggled boolean to activate the intake system
+		*/
 		if(joystickGetDigital(MAIN_JOYSTICK, 6, JOY_UP)) {
 			intakeIsToggled = true;
 		}
@@ -57,6 +87,9 @@ void operatorControl() {
 			intakeIsToggled = false;
 		}
 
+		/*
+		*	Determines whether the intake system is triggered
+		*/
 		if(intakeIsToggled) {
 			motorSet(MOTOR_INTAKE, -127);
 			motorSet(MOTOR_BELT, 127);
@@ -65,6 +98,9 @@ void operatorControl() {
 			motorSet(MOTOR_BELT, 0);
 		}
 
+		/*
+		*	Toggles the firingMode variable to activate the flywheels
+		*/
 		if(joystickGetDigital(MAIN_JOYSTICK, 5, JOY_UP)) {
 			firingMode = true;
 		}
@@ -72,18 +108,15 @@ void operatorControl() {
 			firingMode = false;
 		}
 
+		/*
+		*	Determines whether the firing system is triggered
+		*/
 		if(firingMode) {
 			motorSet(MOTOR_FLYWHEEL_A, 127);
 			motorSet(MOTOR_FLYWHEEL_B, -127);
 		} else {
 			motorSet(MOTOR_FLYWHEEL_A, 0);
 			motorSet(MOTOR_FLYWHEEL_B, 0);
-		}
-
-		if(joystickGetDigital(MAIN_JOYSTICK, 8, JOY_RIGHT)) {
-			motorSet(MOTOR_FIRE, 90);
-		} else {
-			motorSet(MOTOR_FIRE, 0);
 		}
 
 		delay(20);
