@@ -119,6 +119,17 @@ void operatorControl() {
 			motorSet(MOTOR_FLYWHEEL_B, 0);
 		}
 
+		/*
+		*	Activates the cap flipper
+		*/
+		if(joystickGetDigital(MAIN_JOYSTICK, 8, JOY_DOWN)) {
+			motorSet(MOTOR_FLIPPER, 127);
+		} else if(joystickGetDigital(MAIN_JOYSTICK, 8, JOY_RIGHT)) {
+			motorSet(MOTOR_FLIPPER, -127);
+		} else {
+			motorStop(MOTOR_FLIPPER);
+		}
+
 		delay(20);
 	}
 }
