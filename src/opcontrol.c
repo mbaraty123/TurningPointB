@@ -112,7 +112,7 @@ void operatorControl() {
 		*	Determines whether the firing system is triggered
 		*/
 		if(firingMode) {
-			motorSet(MOTOR_FLYWHEEL_A, 127);
+			motorSet(MOTOR_FLYWHEEL_A, -127);
 			motorSet(MOTOR_FLYWHEEL_B, -127);
 		} else {
 			motorSet(MOTOR_FLYWHEEL_A, 0);
