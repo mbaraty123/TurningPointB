@@ -49,6 +49,13 @@ void operatorControl() {
 	*/
 	bool firingMode = false;
 
+	/*
+	* Determines the speed at which the flywheel will spin
+	* True = fast
+	* False = slow
+	*/
+	bool firingSpeed = false;
+
 	while (1) {
 
 		/*
@@ -109,11 +116,23 @@ void operatorControl() {
 		}
 
 		/*
+		* Changes the boolean that determines the firing speed
+		*/
+		if(firingMode && joystickGetDigital(MAIN_JOYSTICK, 7, JOY_LEFT)) {
+			firingSpeed = true;
+		} else if(firingMode && joystickGetDigital(MAIN_JOYSTICK, 7, JOY_DOWN)) {
+			firingSpeed = false;
+		}
+
+		/*
 		*	Determines whether the firing system is triggered
 		*/
-		if(firingMode) {
+		if(firingMode && firingSpeed) {
 			motorSet(MOTOR_FLYWHEEL_A, -127);
 			motorSet(MOTOR_FLYWHEEL_B, -127);
+		} else if(firingMode && !firingSpeed) {
+			motorSet(MOTOR_FLYWHEEL_A, -60);
+			motorSet(MOTOR_FLYWHEEL_B, -60);
 		} else {
 			motorSet(MOTOR_FLYWHEEL_A, 0);
 			motorSet(MOTOR_FLYWHEEL_B, 0);
